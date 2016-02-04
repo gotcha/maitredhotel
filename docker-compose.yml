@@ -1,0 +1,22 @@
+malamute:
+  image: zeromqorg/malamute
+  volumes:
+   - ./malamute/malamute.cfg:/opt/malamute.cfg
+  ports:
+   - "9999:9999"
+  command: ['malamute', '-f', '/opt/malamute.cfg']
+trigger:
+  build: trigger
+  volumes:
+   - ./mdh.py:/opt/mdh.py
+  links:
+   - malamute
+  command: ['python3', '/opt/mdh.py', '-t', '-a', 'tcp://malamute:9999', '-u', 'zeromq']
+committer:
+  image: maitredhotel_trigger
+  volumes:
+   - ./mdh.py:/opt/mdh.py
+   - /Users/gotcha/.ssh:/home/zmq/.ssh
+  links:
+   - malamute
+  command: ['python3', '/opt/mdh.py', '-c', '-a', 'tcp://malamute:9999', '-r', 'git@github.com:gotcha/mdhtest.git']
