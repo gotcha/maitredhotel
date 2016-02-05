@@ -19,7 +19,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - ssh -T git@github.com
+  - ssh -Tv git@github.com
   - docker-compose build
   - docker-compose up -d
   - sleep 20s
