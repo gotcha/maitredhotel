@@ -20,8 +20,8 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - cp travis.rsa /home/travis/.ssh
-  - chmod 600 /home/travis/.ssh/travis.rsa
+  - cp travis.rsa /home/travis/.ssh/id_rsa
+  - chmod 600 /home/travis/.ssh/id_rsa
   - ls -al /home/travis/.ssh
   - ssh -Tv git@github.com
   - docker-compose build
