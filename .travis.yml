@@ -1,3 +1,5 @@
+language: c
+
 env:
   DOCKER_COMPOSE_VERSION: 1.5.2
 
