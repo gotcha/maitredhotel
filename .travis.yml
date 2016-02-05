@@ -13,8 +13,9 @@ addons:
 
 before_install:
   - mkdir -p ~/.ssh
-  - openssl aes-256-cbc -K $encrypted_42099b4af021_key -iv $encrypted_42099b4af021_iv -in travis.rsa.enc -out ~/.ssh/travis.rsa -d
-  - chmod 600 ~/.ssh/travis.rsa
+  - openssl aes-256-cbc -K $encrypted_42099b4af021_key -iv $encrypted_42099b4af021_iv -in travis.rsa.enc -out travis.rsa -d
+  - mv travis.rsa /home/travis/.ssh
+  - chmod 600 /home/travis/.ssh/travis.rsa
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
