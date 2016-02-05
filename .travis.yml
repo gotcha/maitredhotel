@@ -1,6 +1,11 @@
 env:
   DOCKER_COMPOSE_VERSION: 1.6.0
 
+sudo: false
+
+services:
+  - docker
+
 before_install:
   - mkdir -p ~/.ssh
   - openssl aes-256-cbc -K $encrypted_42099b4af021_key -iv $encrypted_42099b4af021_iv -in travis.rsa.enc -out ~/.ssh/travis.rsa -d
