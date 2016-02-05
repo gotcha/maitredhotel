@@ -17,7 +17,7 @@ committer:
   volumes:
    - ./mdh.py:/opt/mdh.py
    - ./mdh_init_and_commit.sh:/opt/mdh_init_and_commit.sh
-   - /Users/gotcha/.ssh:/home/zmq/.ssh
+   - ~/.ssh:/home/zmq/.ssh
   links:
    - malamute
   command: ['/opt/mdh_init_and_commit.sh']
