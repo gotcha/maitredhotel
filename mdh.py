@@ -16,7 +16,7 @@ def trigger(addr, who, url):
     print_and_flush("connect")
     writer.connect(addr, 100, who)
     print_and_flush("set_producer")
-    writer.set_producer(b'lizci')
+    writer.set_producer(b'mdh')
 
     while True:
         now = datetime.datetime.now()
@@ -34,7 +34,7 @@ def committer(addr, filename, repository):
     print_and_flush("connect")
     reader.connect(addr, 100, b'reader')
     print_and_flush("set_consumer")
-    reader.set_consumer(b'lizci', b'')
+    reader.set_consumer(b'mdh', b'')
 
     while True:
         _, who, url, messages = reader.recv()
