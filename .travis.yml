@@ -27,6 +27,6 @@ script:
   - ssh -Tv git@github.com || true
   - docker-compose build
   - docker-compose up -d
-  - timeout 20 docker-compose logs committer
+  - timeout 20 docker-compose logs committer || true
   - docker-compose stop
-  - timeout 5 docker-compose logs committer2
+  - timeout 5 docker-compose logs committer2 || true
