@@ -24,7 +24,7 @@ committer:
   volumes:
    - ./mdh.py:/opt/mdh.py
    - ./mdh_init_and_commit.sh:/opt/mdh_init_and_commit.sh
-   - ~/.ssh:/home/zmq/.ssh
+   - ~/.ssh:/opt/.ssh
   links:
    - malamute
   command: ['/opt/mdh_init_and_commit.sh', 'com', 'git@github.com:gotcha/mdhtest.git']
@@ -33,7 +33,7 @@ committer2:
   volumes:
    - ./mdh.py:/opt/mdh.py
    - ./mdh_init_and_commit.sh:/opt/mdh_init_and_commit.sh
-   - ~/.ssh:/home/zmq/.ssh
+   - ~/.ssh:/opt/.ssh
   links:
    - malamute
   command: ['/opt/mdh_init_and_commit.sh', 'com2', 'git@github.com:gotcha/mdhtest2.git']
