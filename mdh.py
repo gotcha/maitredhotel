@@ -5,10 +5,10 @@ Dependencies for cloud CI
 Usage:
     mdh publish [--name=<name>] ADDR URL
     mdh init [--git-email=<email>] [--git-name=<name>] GIT_REPO DEST
-    mdh commit [--filename=<filename>] ADDR REPO_DIR
+    mdh commit [--name=<name>] [--filename=<filename>] ADDR REPO_DIR
 
 Options:
-    -n=<name>, --name=<name>              Publisher name [default: publisher]
+    -n=<name>, --name=<name>              Publisher or committer name
     -f=<filename>, --filename=<filename>  Filename where events are committed
                                           [default: .mdh]
 """
@@ -52,11 +52,11 @@ def init(repository, dest, email, name):
     os.chdir(dest)
 
 
-def commit(addr, filename, repository):
+def commit(addr, who, filename, repository):
     os.chdir(repository)
     reader = MalamuteClient()
     print_and_flush("connect")
-    reader.connect(addr, 100, b'reader')
+    reader.connect(addr, 100, who)
     print_and_flush("set_consumer")
     reader.set_consumer(PRODUCER, b'')
 
@@ -72,12 +72,13 @@ def write_and_commit(filename, url, messages):
         print(url, *messages, file=f)
     git_cmd('git add ' + filename)
     git_cmd('git commit -m "[MAITRE D''HOTEL] {0}"'.format(url))
+    git_cmd('git pull')
     git_cmd('git push')
 
 
 def git_cmd(cmd):
     print_and_flush(cmd)
-    os.system(cmd)
+    return os.system(cmd)
 
 
 def main():
@@ -93,7 +94,8 @@ def main():
     elif arguments['commit']:
         print_and_flush('commit')
         addr = arguments['ADDR'].encode(UTF8)
-        commit(addr, arguments['--filename'], arguments['REPO_DIR'])
+        who = arguments['--name'].encode(UTF8)
+        commit(addr, who, arguments['--filename'], arguments['REPO_DIR'])
     elif arguments['publish']:
         print_and_flush('publish')
         addr = arguments['ADDR'].encode(UTF8)

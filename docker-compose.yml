@@ -11,7 +11,14 @@ trigger:
    - ./mdh.py:/opt/mdh.py
   links:
    - malamute
-  command: ['python3', '/opt/mdh.py', 'publish', 'tcp://malamute:9999', 'https://github.com/gotcha/maitredhotel']
+  command: ['python3', '/opt/mdh.py', 'publish', '--name=pub', 'tcp://malamute:9999', 'https://github.com/gotcha/maitredhotel']
+trigger2:
+  image: maitredhotel_trigger
+  volumes:
+   - ./mdh.py:/opt/mdh.py
+  links:
+   - malamute
+  command: ['python3', '/opt/mdh.py', 'publish', '--name=pub2', 'tcp://malamute:9999', 'https://github.com/gotcha/mdhtest']
 committer:
   image: maitredhotel_trigger
   volumes:
@@ -20,4 +27,13 @@ committer:
    - ~/.ssh:/home/zmq/.ssh
   links:
    - malamute
-  command: ['/opt/mdh_init_and_commit.sh']
+  command: ['/opt/mdh_init_and_commit.sh', 'com', 'git@github.com:gotcha/mdhtest.git']
+committer2:
+  image: maitredhotel_trigger
+  volumes:
+   - ./mdh.py:/opt/mdh.py
+   - ./mdh_init_and_commit.sh:/opt/mdh_init_and_commit.sh
+   - ~/.ssh:/home/zmq/.ssh
+  links:
+   - malamute
+  command: ['/opt/mdh_init_and_commit.sh', 'com2', 'git@github.com:gotcha/mdhtest2.git']
