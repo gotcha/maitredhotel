@@ -24,7 +24,7 @@ script:
   - chmod 600 /home/travis/.ssh/id_rsa
   - ssh-keyscan -t rsa github.com >> /home/travis/.ssh/known_hosts
   - ls -al /home/travis/.ssh
-  - ssh -Tv git@github.com
+  - ssh -Tv git@github.com || true
   - docker-compose build
   - docker-compose up -d
   - timeout 20 docker-compose logs committer
